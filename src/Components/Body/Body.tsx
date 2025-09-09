@@ -5,7 +5,7 @@ import './body.css';
 const Body = () => {
     return (
         <div className="body">   
-            <h1>Research Page</h1>
+            <h1 className="body-title">Entrez votre recherche ici…</h1>
                 <SearchBar />
         </div>
     )

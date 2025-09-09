@@ -1,6 +1,14 @@
 
 
 .body {
-    width: '50%';
+    width: auto;
+    
+    margin-top: 2rem;
+    
+}
 
+.body-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
 }
