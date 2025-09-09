@@ -1,0 +1,18 @@
+
+
+.footer {
+    background-image: url('../../assets/vitesse_route.jpg');
+    display: flex;
+    flex: row;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+     background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border: 3px solid black;
+    font-size: 1.3rem;
+    font-weight: 700;
+}

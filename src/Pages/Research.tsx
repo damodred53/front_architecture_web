@@ -1,4 +1,5 @@
 import Header from "../Components/Header"
+import Footer from "../Components/Footer/Footer"
 
 const Research = () => {
 
@@ -6,6 +7,7 @@ const Research = () => {
         <>
             <Header />
             <div>Research Page</div>
+            <Footer />
         </>
     )
 }
