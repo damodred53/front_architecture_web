@@ -1,10 +1,12 @@
-
-
+import Header from "../Components/Header"
 
 const Research = () => {
 
     return (
-        <div>Research Page</div>
+        <>
+            <Header />
+            <div>Research Page</div>
+        </>
     )
 }
 

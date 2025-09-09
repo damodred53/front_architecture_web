@@ -1,9 +1,6 @@
-
 import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Research from './Pages/Research.tsx'
-
-
 
 function App() {
  
@@ -15,6 +12,5 @@ function App() {
     </Router>
   )
 }
-
 
 export default App
