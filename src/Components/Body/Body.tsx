@@ -23,15 +23,11 @@ const Body = () => {
     });
   };
 
-  useEffect(() => {
-    console.log("le vrai résultat : ", researchResults);
-  }, [researchResults]);
 
 
   return (
     <div className="body">   
       <h1 className="body-title">Entrez votre recherche ici…</h1>
-      {/* <SearchBarComponent onValueChange={setResearchResults} /> */}
       <div className="search-bar-with-icon">
 
         <SearchBar onValueChange={setResearchResults} />
@@ -48,9 +44,8 @@ const Body = () => {
                     <div>...</div>
                     <li 
                     className="result-item snippet"
-                    dangerouslySetInnerHTML={{ __html: snippet }}
                     >
-                        
+                        ... <span dangerouslySetInnerHTML={{ __html: snippet }} /> ...
                     </li>
                     <ButtonPDF />
                   </ul>

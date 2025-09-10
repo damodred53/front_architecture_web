@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import './searchBarComponent.css'
 import { Box } from '@mui/material';
 import { useState } from 'react';
-import getResearches from '../../Services/researchesServices';
+import {getResearches} from '../../Services/researchesServices';
 
 
 const Search = styled('div')(({ theme }) => ({
