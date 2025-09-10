@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
-import SearchBarComponent from "../SearchBar/SearchBarComponent";
 import './body.css';
+import ButtonPDF from "../Buttons/ButtonPDF";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Body = () => {
   const [researchResults, setResearchResults] = useState<any[]>([]);
@@ -15,16 +16,26 @@ const Body = () => {
 
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth', 
+    });
   };
 
   useEffect(() => {
     console.log("le vrai résultat : ", researchResults);
   }, [researchResults]);
 
+
   return (
     <div className="body">   
       <h1 className="body-title">Entrez votre recherche ici…</h1>
-      <SearchBarComponent onValueChange={setResearchResults} />
+      {/* <SearchBarComponent onValueChange={setResearchResults} /> */}
+      <div className="search-bar-with-icon">
+
+        <SearchBar onValueChange={setResearchResults} />
+      </div>
 
       <div className="results-section">
         {currentResults.length > 0 ? (
@@ -34,11 +45,14 @@ const Body = () => {
               <div className="snippets">
                 {doc.snippets.map((snippet: string, i: number) => (
                   <ul className="results-list" key={i}>
+                    <div>...</div>
                     <li 
                     className="result-item snippet"
                     dangerouslySetInnerHTML={{ __html: snippet }}
-                    ></li>
-
+                    >
+                        
+                    </li>
+                    <ButtonPDF />
                   </ul>
                 ))}
               </div>
@@ -49,7 +63,6 @@ const Body = () => {
         )}
       </div>
 
-      {/* Pagination MUI */}
       {researchResults.length > resultsPerPage && (
         <Pagination
           count={Math.ceil(researchResults.length / resultsPerPage)}
