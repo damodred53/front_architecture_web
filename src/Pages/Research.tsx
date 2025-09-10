@@ -6,8 +6,12 @@ const Research = () => {
 
     return (
         <>
+        <div className="main-content">
             <Header />
-            <Body />
+            <div >
+                <Body />
+            </div>
+        </div>
             <Footer />
         </>
     )
