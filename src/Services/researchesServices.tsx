@@ -38,17 +38,6 @@ export const downloadPDF = async (bookTitle: string, position: number) => {
     }
   }
 
-const managePDFDownloaded = (blob: Blob, bookTitle: string) => {
-    const url = window.URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `${bookTitle}.pdf`; 
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        window.URL.revokeObjectURL(url);
-}   
-
 const openPDFAtStart = async (blob: Blob, start: number) => {
   const url = window.URL.createObjectURL(blob); // ← corrige ici
   const pdf = await pdfjsLib.getDocument(url).promise;
@@ -73,9 +62,4 @@ const openPDFAtStart = async (blob: Blob, start: number) => {
   }
 
   window.open(`${url}#page=${targetPage}`, "_blank");
-};
-
-const openPDFNewTab = (blob: Blob) => {
-  const url = window.URL.createObjectURL(blob); // ← corrige ici aussi
-  window.open(url, "_blank");
 };
