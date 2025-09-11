@@ -2,12 +2,12 @@
 
 .body {
     width: auto;
-    margin-top: 2rem;margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 
 .body-title {
@@ -29,11 +29,15 @@
     justify-content: center;
 }
 .results-section {
+    border: 2px solid black;
+    background-color: whitesmoke;
+    margin-top: 2rem;
+}
+
+.result_div {
     width: 80%;
     margin-top: 2rem;
-    border: 2px solid black;
     padding: 1rem;
-    background-color: whitesmoke;
 }
 
 .results-list {
@@ -68,6 +72,10 @@
   color: #e91e63;         
   background-color: #fff2f8; 
   padding: 0 2px;        
-   
+}
+
+.document-title {
+    margin-top: 2rem;
+    text-align: center;
 }
 

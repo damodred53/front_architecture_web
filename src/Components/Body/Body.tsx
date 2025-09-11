@@ -22,23 +22,24 @@ const Body = () => {
       behavior: 'smooth', 
     });
   };
-
-
+console.log("Body - researchResults:", researchResults);
+  const titleFileName = currentResults.map(result => result.fileName);
 
   return (
-    <div className="body">   
+    <div className="body" data-testid="body-component">   
       <h1 className="body-title">Entrez votre recherche ici…</h1>
       <div className="search-bar-with-icon">
 
         <SearchBar onValueChange={setResearchResults} />
       </div>
 
-      <div className="results-section">
+      <div className="results_div" >
+
         {currentResults.length > 0 ? (
           currentResults.map((doc, index) => (
             <div className="document-result" key={index}>
               <h3 className="document-title">{doc.fileName}</h3>
-              <div className="snippets">
+              <div className="snippets results-section">
                 {doc.snippets.map((snippet: string, i: number) => (
                   <ul className="results-list" key={i}>
                     <div>...</div>
@@ -47,13 +48,14 @@ const Body = () => {
                     >
                         ... <span dangerouslySetInnerHTML={{ __html: snippet }} /> ...
                     </li>
-                    <ButtonPDF />
+                    <ButtonPDF bookTitle={titleFileName[index]} />
                   </ul>
                 ))}
               </div>
-            </div>
+            </div>  
           ))
-        ) : (
+        ) 
+         : (
           <p className="no-results">Aucun résultat trouvé.</p>
         )}
       </div>

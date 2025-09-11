@@ -4,7 +4,7 @@ import FooterInfos from "./FooterInfos"
 const Footer = () => {
 
     return (
-        <div>
+        <div className="footer-block">
             <FooterInfos />
         </div>
     )

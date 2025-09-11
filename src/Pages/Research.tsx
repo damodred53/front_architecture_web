@@ -5,15 +5,11 @@ import Body from "../Components/Body/Body";
 const Research = () => {
 
     return (
-        <>
-        <div className="main-content">
+        <div className="app">  
             <Header />
-            <div >
-                <Body />
-            </div>
-        </div>
+            <Body />
             <Footer />
-        </>
+        </div>
     )
 }
 
