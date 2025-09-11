@@ -119,25 +119,32 @@ jobs:
           mkdir -p artifacts
           zip -r artifacts/web-dist.zip dist
 
-      # ➜ uploader le zip en tant qu'artifact
+      # uploader le zip en tant qu'artifact
       - uses: actions/upload-artifact@v4
         with:
           name: web-dist
           path: artifacts/web-dist.zip
           if-no-files-found: error
 
-
   release:
+    name: Publish GitHub Release
     runs-on: ubuntu-latest
     needs: build
-    if: github.event_name == 'push' # On ne veut pas de release sur PRx
+    if: github.event_name == 'push' # On ne veut pas de release sur PR
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: web-dist
           path: .
-      - name: Debug listing
-        run: ls -R
+
+      - name: Delete previous release (if exists)
+        run: |
+          gh release delete latest -y || true
+          git tag -d latest || true
+          git push origin :refs/tags/latest || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create/Update Release
         uses: softprops/action-gh-release@v2
         with:
