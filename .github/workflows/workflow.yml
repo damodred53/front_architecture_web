@@ -127,18 +127,21 @@ jobs:
     name: Publish GitHub Release
     runs-on: ubuntu-latest
     needs: build
+    if: github.event_name == 'push' # On ne veut pas de release sur PR
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: web-dist
           path: .
+      - name: Debug listing
+        run: ls -R
       - name: Create/Update Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
           name: "Latest Build"
           body: "Build automatique depuis ${{ github.ref }} @ ${{ github.sha }}"
-          files: web-dist.zip
+          files: web-dist/web-dist.zip
           draft: false
           prerelease: false
         env:
