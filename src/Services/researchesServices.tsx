@@ -1,17 +1,19 @@
 import * as pdfjsLib from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker?url";
 
+const URL = import.meta.env.VITE_API_BASE_URL;
+
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export const getResearches = async (query: string) => {
-  const response = await fetch(`http://localhost:5030/api/docs/search?q=${query}`);
-  const data = await response.json();
-  return data;
+    const response = await fetch(`${URL}/api/docs/search?q=${query}`);
+    const data = await response.json();
+    return data;
 };
 
 export const getHistoricResearches = async (query: string) => {
-  const response = await fetch(`http://localhost:5030/FireBaseRecherche/recherche/${query}`);
-  const data = await response.json();
+    const response = await fetch(`${URL}/FireBaseRecherche/recherche/${query}`);
+    const data = await response.json();
 
   if (data && data.status === 404) {
     return [];
@@ -20,13 +22,13 @@ export const getHistoricResearches = async (query: string) => {
 };
 
 export const downloadPDF = async (bookTitle: string, start?: number) => {
-  try {
-    const response = await fetch(
-      `http://localhost:5030/api/pdf/1/8000/${encodeURIComponent(bookTitle)}?zoom=1.25`
-    );
-    if (!response.ok) {
-      throw new Error("Erreur lors du téléchargement du PDF");
-    }
+    try {
+        const response = await fetch(
+            `${URL}/api/pdf/1/8000/${encodeURIComponent(bookTitle)}?zoom=1.25`
+        );
+        if (!response.ok) {
+            throw new Error("Erreur lors du téléchargement du PDF");
+        }
 
     const blob = await response.blob();
 
@@ -64,10 +66,10 @@ const openPDFAtStart = async (blob: Blob, start: number) => {
     start -= pageTextLength; // décrémente "start" pour la page suivante
   }
 
-  window.open(`${url}#page=${targetPage}`, "_blank");
+    window.open(`${url}#page=${targetPage}`, "_blank");
 };
 
 const openPDFNewTab = (blob: Blob) => {
-  const url = URL.createObjectURL(blob);
-  window.open(url, "_blank");
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
 };
