@@ -13,7 +13,6 @@ export default function SearchBar({ onValueChange }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState<string>('');
   const [options, setOptions] = useState<string[]>([]);
 
-  // Récupération des suggestions dès que la valeur du champ change
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (searchValue.trim() === '') {
@@ -23,6 +22,7 @@ export default function SearchBar({ onValueChange }: SearchBarProps) {
 
       try {
         const result = await getHistoricResearches(searchValue);
+        
         if (Array.isArray(result)) {
           const mots = result.map((item: any) => item.mot);
           setOptions(mots);
@@ -38,8 +38,11 @@ export default function SearchBar({ onValueChange }: SearchBarProps) {
     fetchSuggestions();
   }, [searchValue]);
 
-  // Recherche principale
-  const handleSearchIconClick = async () => {
+  const handleSearchClick = async () => {
+
+    if (searchValue.trim() === '') {
+      return;
+    }
     try {
       const response = await getResearches(searchValue);
       if (response && response.results) {
@@ -53,7 +56,7 @@ export default function SearchBar({ onValueChange }: SearchBarProps) {
   return (
     <>
       <SearchIcon
-        onClick={handleSearchIconClick}
+        onClick={handleSearchClick}
         className="search-icon"
         style={{ width: 44, height: 44, cursor: 'pointer' }}
       />

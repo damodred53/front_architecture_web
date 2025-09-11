@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import './body.css';
 import ButtonPDF from "../Buttons/ButtonPDF";
@@ -7,9 +7,9 @@ import SearchBar from "../SearchBar/SearchBar";
 const Body = () => {
   const [researchResults, setResearchResults] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const resultsPerPage = 1; // nombre de documents par page
+  const resultsPerPage = 1;
 
-  // calculer les documents affichés sur la page actuelle
+
   const indexOfLastResult = currentPage * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
   const currentResults = researchResults.slice(indexOfFirstResult, indexOfLastResult);
