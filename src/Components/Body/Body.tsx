@@ -14,7 +14,7 @@ const Body = () => {
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
   const currentResults = researchResults.slice(indexOfFirstResult, indexOfLastResult);
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
 
     window.scrollTo({
