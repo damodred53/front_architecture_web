@@ -3,7 +3,7 @@ import { downloadPDF } from "../../Services/researchesServices";
 
 type ButtonPDFprops = {
   bookTitle: string;
-  position?: number; 
+  position: number; 
 };
 
 const ButtonPDF = ({ bookTitle, position }: ButtonPDFprops) => {

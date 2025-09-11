@@ -1,18 +1,20 @@
 import * as pdfjsLib from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker?url";
 
-const URL = import.meta.env.VITE_API_BASE_URL;
+const URLroot = import.meta.env.VITE_API_BASE_URL;
+
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 export const getResearches = async (query: string) => {
-    const response = await fetch(`${URL}/api/docs/search?q=${query}`);
+    console.log(URLroot);
+    const response = await fetch(`${URLroot}/api/docs/search?q=${query}`);
     const data = await response.json();
     return data;
 };
 
 export const getHistoricResearches = async (query: string) => {
-    const response = await fetch(`${URL}/FireBaseRecherche/recherche/${query}`);
+    const response = await fetch(`${URLroot}/FireBaseRecherche/recherche/${query}`);
     const data = await response.json();
 
   if (data && data.status === 404) {
@@ -21,34 +23,38 @@ export const getHistoricResearches = async (query: string) => {
   return data;
 };
 
-export const downloadPDF = async (bookTitle: string, start?: number) => {
+export const downloadPDF = async (bookTitle: string, position: number) => {
     try {
-        const response = await fetch(
-            `${URL}/api/pdf/1/8000/${encodeURIComponent(bookTitle)}?zoom=1.25`
-        );
+        const response = await fetch(`http://localhost:5030/api/pdf/1/8000/${encodeURIComponent(bookTitle)}?zoom=1.25`);
         if (!response.ok) {
             throw new Error("Erreur lors du téléchargement du PDF");
         }
-
-    const blob = await response.blob();
-
-    if (start !== undefined) {
-      openPDFAtStart(blob, start);
-    } else {
-      openPDFNewTab(blob);
+        console.log(response);
+        const blob = await response.blob();
+        openPDFAtStart(blob, position);
+        
+    } catch (error) {
+        console.error("Erreur lors du téléchargement du PDF :", error);
     }
-  } catch (error) {
-    console.error("Erreur lors du téléchargement du PDF :", error);
   }
-};
+
+const managePDFDownloaded = (blob: Blob, bookTitle: string) => {
+    const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${bookTitle}.pdf`; 
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        window.URL.revokeObjectURL(url);
+}   
 
 const openPDFAtStart = async (blob: Blob, start: number) => {
-  const url = URL.createObjectURL(blob);
+  const url = window.URL.createObjectURL(blob); // ← corrige ici
   const pdf = await pdfjsLib.getDocument(url).promise;
 
   let targetPage = 1;
 
-  // Parcourt toutes les pages pour trouver celle où tombe "start"
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const textContent = await page.getTextContent();
@@ -63,13 +69,13 @@ const openPDFAtStart = async (blob: Blob, start: number) => {
       break;
     }
 
-    start -= pageTextLength; // décrémente "start" pour la page suivante
+    start -= pageTextLength;
   }
 
-    window.open(`${url}#page=${targetPage}`, "_blank");
+  window.open(`${url}#page=${targetPage}`, "_blank");
 };
 
 const openPDFNewTab = (blob: Blob) => {
-    const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
+  const url = window.URL.createObjectURL(blob); // ← corrige ici aussi
+  window.open(url, "_blank");
 };
