@@ -2,20 +2,21 @@ import { Button } from "@mui/material";
 import { downloadPDF } from "../../Services/researchesServices";
 
 type ButtonPDFprops = {
-    bookTitle: string;
-}
+  bookTitle: string;
+  position?: number; 
+};
 
-const ButtonPDF = ({ bookTitle }: ButtonPDFprops) => {
+const ButtonPDF = ({ bookTitle, position }: ButtonPDFprops) => {
+    console.log("voici la position dans ButtonPDF:", position);
+  const handleClick = () => {
+    downloadPDF(bookTitle, position);
+  };
 
-
-    const handleDownloadPDF = (bookTitle: string) => {
-        console.log(bookTitle);
-        downloadPDF(bookTitle);
-    }
-
-    return (
-        <Button onClick={() => handleDownloadPDF(bookTitle)} variant="text">Voir dans le PDF</Button>
-    )
-}
+  return (
+    <Button onClick={handleClick} variant="text">
+      Voir dans le PDF
+    </Button>
+  );
+};
 
 export default ButtonPDF;

@@ -14,7 +14,7 @@ const Body = () => {
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
   const currentResults = researchResults.slice(indexOfFirstResult, indexOfLastResult);
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
 
     window.scrollTo({
@@ -24,6 +24,7 @@ const Body = () => {
   };
 console.log("Body - researchResults:", researchResults);
   const titleFileName = currentResults.map(result => result.fileName);
+  const positionInText = currentResults.map(result => result.occurrences[0]?.start || 0);
 
   return (
     <div className="body" data-testid="body-component">   
@@ -48,7 +49,7 @@ console.log("Body - researchResults:", researchResults);
                     >
                         ... <span dangerouslySetInnerHTML={{ __html: snippet }} /> ...
                     </li>
-                    <ButtonPDF bookTitle={titleFileName[index]} />
+                    <ButtonPDF bookTitle={titleFileName[index]} position={positionInText[index]} />
                   </ul>
                 ))}
               </div>
