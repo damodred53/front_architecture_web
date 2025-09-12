@@ -182,16 +182,15 @@ jobs:
             type=raw,value=latest
             type=sha,format=short
 
-      - name: Build and push
+      - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./               # racine du repo front
-          file: ./Dockerfile        # Dockerfile du front
+          context: .
+          file: ./Dockerfile
           push: true
-          platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/front-architecture-web:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/front-architecture-web:sha-${{ github.sha }}
           build-args: |
             VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
