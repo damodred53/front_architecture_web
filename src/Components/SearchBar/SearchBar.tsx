@@ -81,7 +81,7 @@ export default function SearchBar({ onValueChange, onSearchValueChange }: Search
           renderInput={(params) => (
             <TextField
               {...params}
-              label="Search input"
+              label="Votre recherche"
               style={{ width: 600 }}
               type="search"
             />

@@ -2,12 +2,14 @@
 
 .body {
     width: auto;
-    margin-top: 2rem;
+    margin-top: 5rem;
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 80%;
+    overflow-y: auto;
 }
 
 .document-result {

@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import { downloadPDF } from "../../Services/researchesServices";
+import { downloadPDF, downloadPDFWithPage } from "../../Services/researchesServices";
 
 type ButtonPDFprops = {
   bookTitle: string;
@@ -8,12 +8,18 @@ type ButtonPDFprops = {
   start: number;
   end: number;
   index: number;
+  fichierUrl: string;
+  snippet: string;
+  otherFichierUrl: string;
 };
 
-const ButtonPDF = ({ bookTitle, position, searchWord, start, end, index }: ButtonPDFprops) => {
-    console.log("voici la position dans ButtonPDF:", position);
+const ButtonPDF = ({ bookTitle, position, searchWord, start, end, index, fichierUrl, snippet, otherFichierUrl }: ButtonPDFprops) => {
   const handleClick = () => {
-    downloadPDF(bookTitle,  searchWord, start, end, index);
+
+    const word = "pomme";
+    const index = 1;
+    // downloadPDF(bookTitle,  searchWord, start, end, index);
+    downloadPDFWithPage(word, index, otherFichierUrl, snippet);
   };
 
   return (

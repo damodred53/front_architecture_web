@@ -3,7 +3,7 @@
 const Names = () => {
   return (
       <div>
-          Projet présenté par Mathieu, Killian, Corentin, et Florent
+          Projet présenté par Mathieu, Kilian, Corentin, et Florent
       </div>
   )
 }
