@@ -165,7 +165,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 👇 Debug: montre où on est et ce qui existe
       - name: Debug paths
         run: |
           pwd
@@ -187,8 +186,6 @@ jobs:
         with:
           install: true
 
-      # 🔧 Adapte *ici* selon l'emplacement réel de ton Dockerfile
-      # SI le Dockerfile est à la RACINE du repo:
       - name: Build and push (root Dockerfile)
         uses: docker/build-push-action@v6
         with:
@@ -203,20 +200,3 @@ jobs:
             VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      # SI (au contraire) ton Dockerfile est dans front_architecture_web/, commente le bloc au-dessus
-      # et dé-commente ce bloc:
-      # - name: Build and push (Dockerfile in subfolder)
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     context: ./front_architecture_web
-      #     file: ./front_architecture_web/Dockerfile
-      #     push: true
-      #     platforms: linux/amd64,linux/arm64
-      #     tags: |
-      #       ${{ secrets.DOCKERHUB_USERNAME }}/front-architecture-web:latest
-      #       ${{ secrets.DOCKERHUB_USERNAME }}/front-architecture-web:sha-${{ github.sha }}
-      #     build-args: |
-      #       VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
-      #     cache-from: type=gha
-      #     cache-to: type=gha,mode=max
