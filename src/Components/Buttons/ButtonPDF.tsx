@@ -3,13 +3,16 @@ import { downloadPDF } from "../../Services/researchesServices";
 
 type ButtonPDFprops = {
   bookTitle: string;
-  position: number; 
+  position?: number;
+  searchWord: string;
+  start: number;
+  end: number;
 };
 
-const ButtonPDF = ({ bookTitle, position }: ButtonPDFprops) => {
+const ButtonPDF = ({ bookTitle, position, searchWord, start, end }: ButtonPDFprops) => {
     console.log("voici la position dans ButtonPDF:", position);
   const handleClick = () => {
-    downloadPDF(bookTitle, position);
+    downloadPDF(bookTitle,  searchWord, start, end);
   };
 
   return (

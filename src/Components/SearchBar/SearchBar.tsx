@@ -7,18 +7,20 @@ import { useEffect, useState } from 'react';
 
 interface SearchBarProps {
   onValueChange: (results: any[]) => void;
+  onSearchValueChange: (value: string) => void;
 }
 
-export default function SearchBar({ onValueChange }: SearchBarProps) {
+export default function SearchBar({ onValueChange, onSearchValueChange }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState<string>('');
   const [options, setOptions] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchSuggestions = async () => {
+      console.log("Fetching suggestions for:", searchValue);
       if (searchValue.trim() === '') {
         setOptions([]);
         return;
-      }
+      } 
 
       try {
         const result = await getHistoricResearches(searchValue);
@@ -68,10 +70,12 @@ export default function SearchBar({ onValueChange }: SearchBarProps) {
           inputValue={searchValue}
           onInputChange={(_, value) => {
             setSearchValue(value);
+            onSearchValueChange?.(value);
           }}
           onChange={(_, value) => {
             if (typeof value === 'string') {
               setSearchValue(value);
+              
             }
           }}
           renderInput={(params) => (

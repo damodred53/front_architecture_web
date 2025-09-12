@@ -7,6 +7,9 @@ import SearchBar from "../SearchBar/SearchBar";
 const Body = () => {
   const [researchResults, setResearchResults] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+
+  // Valeur à envoyer au bouton pour la recherche dans le pdf
+  const [searchValue, setSearchValue] = useState('');
   const resultsPerPage = 1;
 
 
@@ -25,13 +28,15 @@ const Body = () => {
 console.log("Body - researchResults:", researchResults);
   const titleFileName = currentResults.map(result => result.fileName);
   const positionInText = currentResults.map(result => result.occurrences[0]?.start || 0);
+  const startInText = currentResults.map(result => result.occurrences[0]?.start || 0);
+  const endInText = currentResults.map(result => result.occurrences[0]?.end || 0);
 
   return (
     <div className="body" data-testid="body-component">   
       <h1 className="body-title">Entrez votre recherche ici…</h1>
       <div className="search-bar-with-icon">
 
-        <SearchBar onValueChange={setResearchResults} />
+        <SearchBar onValueChange={setResearchResults} onSearchValueChange={setSearchValue} />
       </div>
 
       <div className="results_div" >
@@ -49,7 +54,7 @@ console.log("Body - researchResults:", researchResults);
                     >
                         ... <span dangerouslySetInnerHTML={{ __html: snippet }} /> ...
                     </li>
-                    <ButtonPDF bookTitle={titleFileName[index]} position={positionInText[index]} />
+                    <ButtonPDF bookTitle={titleFileName[index]} position={positionInText[index]} searchWord={searchValue} start={startInText[index]} end={endInText[index]} />
                   </ul>
                 ))}
               </div>
