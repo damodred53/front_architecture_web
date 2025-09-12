@@ -54,7 +54,7 @@ console.log("Body - researchResults:", researchResults);
                     >
                         ... <span dangerouslySetInnerHTML={{ __html: snippet }} /> ...
                     </li>
-                    <ButtonPDF bookTitle={titleFileName[index]} position={positionInText[index]} searchWord={searchValue} start={startInText[index]} end={endInText[index]} />
+                    <ButtonPDF index={i} bookTitle={titleFileName[index]} position={positionInText[index]} searchWord={searchValue} start={startInText[index]} end={endInText[index]} />
                   </ul>
                 ))}
               </div>
