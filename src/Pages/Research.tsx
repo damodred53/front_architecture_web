@@ -12,9 +12,7 @@ const Research = () => {
             <Body />
             
         </div>
-        {/* <div className="test2">
-            <Footer />
-        </div> */}
+
         
         </div>
     )
