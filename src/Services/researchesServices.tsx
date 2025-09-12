@@ -96,7 +96,6 @@ const openPDFOnNthOccurrence = async (blob: Blob, searchWord: string, index: num
 
 const stripHtmlTags = (html: string): string => html.replace(/<[^>]*>/g, "");
 
-// Fonction pour déclencher le téléchargement d'un Blob
 const downloadBlob = (blob: Blob, filename: string) => {
   const url = window.URL.createObjectURL(blob);
   const a = document.createElement("a");
@@ -115,26 +114,27 @@ export const downloadPDFWithPage = async (
   snippet: string
 ) => {
   try {
-    // Nettoyage du snippet : suppression des balises, des retours à la ligne et des tirets
+    // Nettoyage du snippet : balises, espaces, tirets
     const cleanSnippet = stripHtmlTags(snippet)
-      .replace(/\s+/g, " ")   // remplacer retours à la ligne et espaces multiples
-      .replace(/-/g, "")       // retirer les tirets
+      .replace(/\s+/g, " ")
+      .replace(/-/g, "")
       .trim();
 
-    console.log("Snippet nettoyé :", cleanSnippet);
+    // Garder seulement les 5 premiers mots
+    const snippetSlice = cleanSnippet.split(" ").slice(0, 5).join(" ");
+
+    console.log("Snippet réduit à 5 mots :", snippetSlice);
 
     const response = await fetch(
-      `${URLroot}/api/docs/findWordInPdf/${encodeURIComponent(word)}/${index}/${encodeURIComponent(otherFichierUrl)}/${encodeURIComponent(cleanSnippet)}`
+      `${URLroot}/api/docs/findWordInPdf/${encodeURIComponent(word)}/${index}/${encodeURIComponent(otherFichierUrl)}/${encodeURIComponent(snippetSlice)}`
     );
 
     if (!response.ok) {
       throw new Error("Erreur lors du téléchargement du PDF");
     }
 
-    // Récupérer le PDF en tant que blob
     const blob = await response.blob();
 
-    // Déclencher le téléchargement du fichier
     const filename = `${otherFichierUrl}.pdf`;
     downloadBlob(blob, filename);
 
@@ -144,6 +144,4 @@ export const downloadPDFWithPage = async (
     console.error("Erreur lors du téléchargement du PDF :", error);
   }
 };
-
-
 
