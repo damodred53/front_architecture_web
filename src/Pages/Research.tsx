@@ -1,6 +1,6 @@
 import Header from "../Components/Header"
 import Body from "../Components/Body/Body";
-import "./Research.css"
+import "./research.css"
 
 const Research = () => {
 
