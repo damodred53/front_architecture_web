@@ -22,10 +22,10 @@ export const getHistoricResearches = async (query: string) => {
   return data;
 };
 
-export const downloadPDF = async (bookTitle: string, searchWord: string, start: number, end: number, index: number) => {
+export const downloadPDF = async (bookTitle: string, searchWord: string, _start: number, _end: number, index: number) => {
   try {
     const response = await fetch(
-      `http://localhost:5030/api/pdf/1/8000/${encodeURIComponent(bookTitle)}?zoom=1.25`
+      `${URLroot}/api/pdf/1/8000/${encodeURIComponent(bookTitle)}?zoom=1.25`
     );
     if (!response.ok) {
       throw new Error("Erreur lors du téléchargement du PDF");
@@ -56,27 +56,27 @@ const openPDFOnNthOccurrence = async (blob: Blob, searchWord: string, index: num
   const pdf = await pdfjsLib.getDocument(url).promise;
 
   let currentOccurrenceCount = 0;
-  let targetPage = 1; 
+  let targetPage = 1;
 
 
   for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
     const page = await pdf.getPage(pageNumber);
     const textContent = await page.getTextContent();
     const pageText = textContent.items.map((item: any) => item.str).join(" ");
-    
+
 
     const positions = findWordPositions(pageText, searchWord);
-    
+
     for (const _position of positions) {
       currentOccurrenceCount++;
-      
+
 
       if (currentOccurrenceCount === index) {
         targetPage = pageNumber;
-        break; 
+        break;
       }
     }
-    
+
 
     if (currentOccurrenceCount === index) {
       break;
