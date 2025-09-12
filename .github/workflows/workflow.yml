@@ -185,12 +185,11 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./front_architecture_web
+          file: ./front_architecture_web/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/front-architecture-web:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/front-architecture-web:sha-${{ github.sha }}
           build-args: |
             VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }}
-          platforms: linux/amd64,linux/arm64
